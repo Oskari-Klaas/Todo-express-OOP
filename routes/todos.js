@@ -9,5 +9,9 @@ const router = Router()
 router.post('/new-todo', (req, res) => TodoController.createTodo(req, res))
 // GET = read and or view the list
 router.get('/', (req, res) => TodoController.getTodos(req, res))
+// PATCH = update and or edit the list, when someone visits the /:id route it will call the updateTodo function in the todoController class
+router.patch('/:id', (req, res) => TodoController.updateTodo(req, res))
+// DELETE = delete and or remove from the list, when someone visits the /:id route it will call the DeleteTodo function in the todoController class
+router.delete('/:id', (req, res) => TodoController.DeleteTodo(req, res))
 
 export default router

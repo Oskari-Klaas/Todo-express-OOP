@@ -37,7 +37,7 @@ class todoController {
         console.log(req.params)
 
         //checks if the todo exists within the list
-        const todoIndex = this.TODOS.findIndex((todo) => todo.id === todoId)
+        const todoIndex = this.TODOS.findIndex((/*creates -->*/todo) => todo.id === todoId)
 
         //if it dont throw up an error and skip EVERYTHING else
         if(todoIndex < 0 ){
@@ -52,6 +52,27 @@ class todoController {
         res.json({
             message: 'todo is updated',
             updatedTask: this.TODOS[todoIndex]
+        })
+    }
+
+    DeleteTodo(req, res){
+        const todoId = req.params.id
+        
+        //checks if the todo exists within the list
+        const todoIndex = this.TODOS.findIndex((todo) => todo.id === todoId)
+
+        if(todoIndex < 0 ){
+            res.json({
+                message: 'could not find todo with such index'
+            })
+            throw new Error('Could not find todo')
+        }
+
+        //removes the todo from the list
+        this.TODOS.splice(todoIndex, 1)
+        res.json({
+            message: 'todo is deleted',
+            deletedTaskId: todoId
         })
     }
 }
