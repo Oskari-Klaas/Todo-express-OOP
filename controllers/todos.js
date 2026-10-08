@@ -8,12 +8,14 @@ class todoController {
 
 
     // function that creates a new todo and pushes it to the list of todos
-    createTodo(req, res){
+    async createTodo(req, res){
         const task = req.body.task
         // creates the new todo
         const newTodo = new Todo(Math.random().toString(), task)
         // pushes it into the list
         this.TODOS.push(newTodo)
+        // waits until the file is written before continuing the rest of the code, writes the list of todos into a json file
+        await fileManager.writeFile('./data/todos.json', this.TODOS)
         // res = send out stuff aka a response to the user
         res.json({
             message: 'created new todo object',
