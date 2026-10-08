@@ -25,6 +25,36 @@ class todoController {
     getTodos(req, res){
         res.json({tasks: this.TODOS})
     }
+
+    updateTodo(req, res){
+        // gets the id and task 
+        //params = the like /blank at the end of the url
+        const todoId = req.params.id
+        const updatedTask = req.body.task
+
+        //logs it into the console
+        console.log(req.body)
+        console.log(req.params)
+
+        //checks if the todo exists within the list
+        const todoIndex = this.TODOS.findIndex((todo) => todo.id === todoId)
+
+        //if it dont throw up an error and skip EVERYTHING else
+        if(todoIndex < 0 ){
+            res.json({
+                message: 'could not find todo with such index'
+            })
+            throw new Error('Could not find todo')
+        }
+
+        //if it does exist then update the task with the new task
+        this.TODOS[todoIndex] = new Todo(this.TODOS[todoIndex].id, updatedTask)
+        res.json({
+            message: 'todo is updated',
+            updatedTask: this.TODOS[todoIndex]
+        })
+    }
 }
+
 
 export const TodoController = new todoController()
