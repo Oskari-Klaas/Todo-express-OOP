@@ -6,6 +6,7 @@ import todoRoutes from './routes/todos.js'
 /* Create web serer application */
 const app = express();
 /*allows the server to read JSON data */
+app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/todos', todoRoutes)

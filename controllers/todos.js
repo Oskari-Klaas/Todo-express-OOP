@@ -1,9 +1,10 @@
 import { Todo } from '../models/todo.js'
+import { fileManager } from '../files.js'
 
 // just makes a list and manages the functions or whatevs
 class todoController {
     constructor() {
-        this.TODOS = []
+        this.initTodos()
     }
 
 
@@ -22,6 +23,16 @@ class todoController {
             // explains to the user what the new task is
             newTask: newTodo
         })
+    }
+
+    async initTodos(){
+        const todosData = await fileManager.readFile('./data/todos.json')
+        // if data is ok - add file content to array
+        if(todosData !== null){
+            this.TODOS = todosData
+        } else {
+            this.TODOS = [] // if we do not get data from file create an empty array
+        }
     }
 
     getTodos(req, res){
